@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>War of Guns</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+    #game-container {
+      position: relative;
+      width: 1024px;
+      height: 768px;
+    }
+    canvas { display: block; cursor: crosshair; }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      z-index: 10;
+    }
+    .overlay.hidden { display: none; }
+    .overlay h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #ffcc00;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .overlay button {
+      padding: 12px 32px;
+      margin: 8px;
+      font-size: 1.1rem;
+      border: 2px solid #ffcc00;
+      background: transparent;
+      color: #ffcc00;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .overlay button:hover {
+      background: #ffcc00;
+      color: #000;
+    }
+    .overlay button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .overlay button:disabled:hover {
+      background: transparent;
+      color: #ffcc00;
+    }
+    .shop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 8px 0;
+      width: 100%;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .panel .shop-grid { max-width: 460px; }
+    .shop-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+    .shop-section h3 {
+      color: #aaa;
+      margin-bottom: 8px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
+    .shop-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 8px;
+      margin: 3px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .shop-item:hover { background: rgba(255, 204, 0, 0.1); }
+    .shop-item.equipped { border: 1px solid #44ff44; }
+    .shop-item .item-name { color: #ddd; font-size: 0.85rem; }
+    .shop-item .item-price { color: #ffcc00; font-size: 0.85rem; white-space: nowrap; }
+    .shop-item .item-owned { color: #44ff44; font-size: 0.8rem; }
+    .shop-item .item-level { color: #88aaff; font-size: 0.75rem; font-weight: bold; }
+    .shop-item.owned { border: 1px solid #4488ff; }
+    .item-tag {
+      font-size: 0.75rem;
+      padding: 1px 6px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    .item-tag.equipped-tag { background: #44ff44; color: #000; }
+    .item-tag.owned-tag { background: #4488ff; color: #fff; }
+    .money-display {
+      font-size: 1.5rem;
+      color: #ffcc00;
+      margin: 8px 0 16px;
+    }
+    /* Split-screen co-op panels */
+    .split-container {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+    }
+    .panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 8px;
+      overflow-y: auto;
+      border-radius: 8px;
+    }
+    .panel-solo { max-width: 720px; margin: 0 auto; }
+    .panel-p1 { border-right: 2px solid rgba(68, 255, 68, 0.3); }
+    .panel-p2 { border-left: 2px solid rgba(68, 136, 255, 0.3); }
+    .panel h2 { font-size: 1.4rem; margin-bottom: 6px; }
+    .panel .player-label { font-size: 1.1rem; margin-bottom: 4px; font-weight: bold; }
+    .panel .points-display {
+      font-size: 1.2rem;
+      color: #ffcc00;
+      margin: 4px 0 8px;
+    }
+    .panel .points-display .pts-num { font-weight: bold; font-size: 1.4rem; }
+    /* Upgrade cards */
+    .upgrade-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+      max-width: 420px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0 4px;
+    }
+    .upgrade-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 12px;
+      border: 2px solid #444;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upgrade-card:hover {
+      border-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.1);
+    }
+    .upgrade-card.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: #333;
+    }
+    .upgrade-card.disabled:hover {
+      border-color: #333;
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .upgrade-card .upgrade-info { flex: 1; }
+    .upgrade-card .upgrade-title {
+      font-size: 0.95rem;
+      color: #ffcc00;
+      margin-bottom: 3px;
+    }
+    .upgrade-card .upgrade-desc {
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+    .upgrade-card .upgrade-cost {
+      font-size: 0.85rem;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      white-space: nowrap;
+      margin-left: 8px;
+    }
+    .upgrade-cost.affordable {
+      background: rgba(68, 255, 68, 0.2);
+      color: #44ff44;
+      border: 1px solid #44ff44;
+    }
+    .upgrade-cost.expensive {
+      background: rgba(255, 68, 68, 0.15);
+      color: #ff6666;
+      border: 1px solid #ff4444;
+    }
+    .upgrade-section-label {
+      color: #888;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 100%;
+      max-width: 420px;
+      margin-top: 6px;
+      margin-bottom: 2px;
+      padding-left: 4px;
+    }
+    /* Player ready indicator */
+    .player-ready-badge {
+      color: #44ff44;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 8px 0;
+    }
+    /* Legacy upgrade-choice (kept for menu-focused) */
+    .upgrade-choices {
+      display: flex;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .upgrade-choice {
+      padding: 20px;
+      border: 2px solid #444;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      min-width: 180px;
+      transition: all 0.2s;
+    }
+    .upgrade-choice:hover {
+      border-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.1);
+    }
+    .upgrade-choice .upgrade-title {
+      font-size: 1.1rem;
+      color: #ffcc00;
+      margin-bottom: 8px;
+    }
+    .upgrade-choice .upgrade-desc {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+    .upgrade-card.menu-focused {
+      border-color: #ffcc00 !important;
+      background: rgba(255, 204, 0, 0.15) !important;
+      transform: scale(1.02);
+    }
+    .gameover-stats {
+      color: #aaa;
+      margin: 16px 0;
+      text-align: center;
+      line-height: 1.8;
+    }
+    /* Controller / keyboard navigation highlight */
+    .menu-focused {
+      outline: 2px solid #ffcc00 !important;
+      outline-offset: 2px;
+      background: rgba(255, 204, 0, 0.15) !important;
+    }
+    .shop-item.menu-focused {
+      background: rgba(255, 204, 0, 0.2) !important;
+      border-color: #ffcc00;
+    }
+    .overlay button.menu-focused {
+      background: #ffcc00 !important;
+      color: #000 !important;
+    }
+    .upgrade-choice.menu-focused {
+      border-color: #ffcc00 !important;
+      background: rgba(255, 204, 0, 0.15) !important;
+      transform: scale(1.03);
+    }
+    /* Main Menu */
+    .menu-title {
+      font-size: 2.5rem;
+      color: #ffcc00;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+    }
+    .menu-subtitle {
+      font-size: 0.8rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .menu-btn {
+      display: block;
+      width: 280px;
+      padding: 10px 32px;
+      margin: 6px auto;
+      font-size: 1.05rem;
+      border: 2px solid #ffcc00;
+      background: transparent;
+      color: #ffcc00;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: all 0.2s;
+    }
+    .menu-btn:hover, .menu-btn.menu-focused {
+      background: #ffcc00 !important;
+      color: #000 !important;
+    }
+    /* Options */
+    .options-group {
+      margin: 20px 0;
+      text-align: center;
+    }
+    .options-label {
+      color: #aaa;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .diff-btn {
+      padding: 10px 24px;
+      margin: 4px;
+      font-size: 1rem;
+      border: 2px solid #555;
+      background: transparent;
+      color: #aaa;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .diff-btn:hover {
+      border-color: #ffcc00;
+      color: #ffcc00;
+    }
+    .diff-btn.active {
+      background: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+    }
+    .diff-btn.menu-focused {
+      outline: 2px solid #ffcc00 !important;
+      outline-offset: 2px;
+    }
+    .diff-btn.active.menu-focused {
+      background: #ffcc00 !important;
+      color: #000 !important;
+    }
+    .volume-slider {
+      width: 220px;
+      accent-color: #ffcc00;
+      cursor: pointer;
+    }
+    .volume-label {
+      color: #ffcc00;
+      margin-left: 8px;
+      font-size: 1rem;
+    }
+    /* Achievements */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 700px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+    .achievement-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+    }
+    .achievement-card.unlocked {
+      border-color: #ffcc00;
+      background: rgba(255, 204, 0, 0.08);
+    }
+    .achievement-card.locked {
+      opacity: 0.5;
+    }
+    .achievement-icon {
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .achievement-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .achievement-name {
+      font-size: 0.95rem;
+      color: #ffcc00;
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .achievement-card.locked .achievement-name {
+      color: #888;
+    }
+    .achievement-desc {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    .achievement-card.locked .achievement-desc {
+      color: #666;
+    }
+    /* Exit Screen */
+    .exit-message {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-top: 8px;
+      letter-spacing: 2px;
+    }
+    .exit-submessage {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 12px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas" width="1024" height="768"></canvas>
+
+    <!-- Main Menu (visible by default) -->
+    <div id="mainmenu-overlay" class="overlay">
+      <div class="menu-title">War of Guns</div>
+      <div class="menu-subtitle">Dungeon Survival</div>
+      <button id="menu-solo-btn" class="menu-btn">New Run</button>
+      <button id="menu-coop-btn" class="menu-btn">Co-Op</button>
+      <button id="menu-options-btn" class="menu-btn">Options</button>
+      <button id="menu-achievements-btn" class="menu-btn">Achievements</button>
+      <button id="menu-exit-btn" class="menu-btn">Exit</button>
+    </div>
+
+    <!-- Options Screen -->
+    <div id="options-overlay" class="overlay hidden">
+      <h2>Options</h2>
+      <div class="options-group">
+        <span class="options-label">Music Volume</span>
+        <input id="options-volume" type="range" min="0" max="100" value="35" class="volume-slider" />
+        <span id="options-volume-label" class="volume-label">35%</span>
+      </div>
+      <div class="options-group">
+        <span class="options-label">Difficulty</span>
+        <div>
+          <button id="diff-easy" class="diff-btn">Easy</button>
+          <button id="diff-normal" class="diff-btn active">Normal</button>
+          <button id="diff-hard" class="diff-btn">Hard</button>
+        </div>
+      </div>
+      <button id="options-back-btn" class="menu-btn" style="margin-top: 24px;">Back</button>
+    </div>
+
+    <!-- Achievements Screen -->
+    <div id="achievements-overlay" class="overlay hidden">
+      <h2>Achievements</h2>
+      <div id="achievements-grid" class="achievements-grid"></div>
+      <button id="achievements-back-btn" class="menu-btn" style="margin-top: 16px;">Back</button>
+    </div>
+
+    <!-- Exit / Goodbye Screen -->
+    <div id="exit-overlay" class="overlay hidden">
+      <h2>Thanks for Playing!</h2>
+      <div class="exit-message">War of Guns &mdash; Dungeon Survival</div>
+      <div class="exit-submessage">See you next time, soldier.</div>
+      <button id="exit-back-btn" class="menu-btn" style="margin-top: 24px;">Return to Menu</button>
+    </div>
+
+    <div id="shop-overlay" class="overlay hidden"></div>
+
+    <div id="pause-overlay" class="overlay hidden">
+      <h2>Paused</h2>
+      <button id="resume-btn">Resume</button>
+      <button id="restart-btn">Restart</button>
+    </div>
+
+    <div id="levelup-overlay" class="overlay hidden"></div>
+
+    <div id="gameover-overlay" class="overlay hidden">
+      <h2>Game Over</h2>
+      <div class="gameover-stats" id="gameover-stats"></div>
+      <button id="restart-gameover-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

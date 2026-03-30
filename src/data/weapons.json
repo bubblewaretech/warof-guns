@@ -1,0 +1,226 @@
+{
+  "guns": {
+    "pistol": {
+      "name": "Pistol",
+      "baseDamage": 5,
+      "fireRate": 0.35,
+      "ammoMax": 30,
+      "range": 400,
+      "projectileSpeed": 500,
+      "price": 0,
+      "ammoPrice": 10,
+      "ammoPurchaseAmount": 15,
+      "projectileColor": "0xffff44",
+      "upgradeScaling": {
+        "damage": 2,
+        "fireRate": -0.04,
+        "ammoMax": 5
+      }
+    },
+    "smg": {
+      "name": "SMG",
+      "baseDamage": 3,
+      "fireRate": 0.12,
+      "ammoMax": 60,
+      "range": 300,
+      "projectileSpeed": 550,
+      "price": 75,
+      "ammoPrice": 20,
+      "ammoPurchaseAmount": 30,
+      "projectileColor": "0x44ffff",
+      "upgradeScaling": {
+        "damage": 1,
+        "fireRate": -0.015,
+        "ammoMax": 10
+      }
+    },
+    "shotgun": {
+      "name": "Shotgun",
+      "baseDamage": 4,
+      "fireRate": 0.7,
+      "ammoMax": 16,
+      "range": 250,
+      "projectileSpeed": 450,
+      "price": 100,
+      "ammoPrice": 15,
+      "ammoPurchaseAmount": 8,
+      "projectileColor": "0xff8844",
+      "pellets": 5,
+      "spread": 0.35,
+      "upgradeScaling": {
+        "damage": 1.5,
+        "fireRate": -0.06,
+        "ammoMax": 4
+      }
+    },
+    "rocket": {
+      "name": "Rocket",
+      "baseDamage": 25,
+      "fireRate": 1.4,
+      "ammoMax": 8,
+      "range": 500,
+      "projectileSpeed": 320,
+      "price": 200,
+      "ammoPrice": 40,
+      "ammoPurchaseAmount": 4,
+      "projectileColor": "0xff4400",
+      "explosionRadius": 80,
+      "upgradeScaling": {
+        "damage": 8,
+        "fireRate": -0.1,
+        "ammoMax": 2
+      }
+    },
+    "grenade": {
+      "name": "Grenade",
+      "baseDamage": 18,
+      "fireRate": 1.0,
+      "ammoMax": 10,
+      "range": 300,
+      "projectileSpeed": 280,
+      "price": 150,
+      "ammoPrice": 30,
+      "ammoPurchaseAmount": 5,
+      "projectileColor": "0x88cc00",
+      "explosionRadius": 100,
+      "upgradeScaling": {
+        "damage": 6,
+        "fireRate": -0.08,
+        "ammoMax": 3
+      }
+    },
+    "laser": {
+      "name": "Laser",
+      "baseDamage": 7,
+      "fireRate": 0.18,
+      "ammoMax": 40,
+      "range": 600,
+      "projectileSpeed": 900,
+      "price": 250,
+      "ammoPrice": 25,
+      "ammoPurchaseAmount": 20,
+      "projectileColor": "0x00ffff",
+      "upgradeScaling": {
+        "damage": 2.5,
+        "fireRate": -0.02,
+        "ammoMax": 8
+      }
+    },
+    "waveGun": {
+      "name": "Wave Gun",
+      "baseDamage": 10,
+      "fireRate": 0.55,
+      "ammoMax": 24,
+      "range": 250,
+      "projectileSpeed": 350,
+      "price": 180,
+      "ammoPrice": 20,
+      "ammoPurchaseAmount": 12,
+      "projectileColor": "0xaa44ff",
+      "pellets": 3,
+      "spread": 0.4,
+      "upgradeScaling": {
+        "damage": 3,
+        "fireRate": -0.05,
+        "ammoMax": 6
+      }
+    },
+    "pulseGun": {
+      "name": "Pulse Gun",
+      "baseDamage": 4,
+      "fireRate": 0.08,
+      "ammoMax": 80,
+      "range": 350,
+      "projectileSpeed": 600,
+      "price": 160,
+      "ammoPrice": 25,
+      "ammoPurchaseAmount": 40,
+      "projectileColor": "0x44ff88",
+      "upgradeScaling": {
+        "damage": 1,
+        "fireRate": -0.008,
+        "ammoMax": 15
+      }
+    }
+  },
+  "melee": {
+    "sword": {
+      "name": "Sword",
+      "baseDamage": 8,
+      "cooldown": 0.45,
+      "range": 55,
+      "arc": 90,
+      "knockback": 120,
+      "price": 0,
+      "upgradeScaling": {
+        "damage": 3,
+        "cooldown": -0.04
+      }
+    },
+    "bat": {
+      "name": "Bat",
+      "baseDamage": 12,
+      "cooldown": 0.7,
+      "range": 65,
+      "arc": 130,
+      "knockback": 200,
+      "price": 60,
+      "upgradeScaling": {
+        "damage": 4,
+        "cooldown": -0.06
+      }
+    },
+    "dagger": {
+      "name": "Dagger",
+      "baseDamage": 5,
+      "cooldown": 0.2,
+      "range": 40,
+      "arc": 60,
+      "knockback": 60,
+      "price": 50,
+      "upgradeScaling": {
+        "damage": 2,
+        "cooldown": -0.02
+      }
+    },
+    "hatchet": {
+      "name": "Hatchet",
+      "baseDamage": 15,
+      "cooldown": 0.55,
+      "range": 50,
+      "arc": 75,
+      "knockback": 150,
+      "price": 90,
+      "upgradeScaling": {
+        "damage": 5,
+        "cooldown": -0.05
+      }
+    },
+    "spear": {
+      "name": "Spear",
+      "baseDamage": 10,
+      "cooldown": 0.6,
+      "range": 80,
+      "arc": 40,
+      "knockback": 80,
+      "price": 110,
+      "upgradeScaling": {
+        "damage": 3.5,
+        "cooldown": -0.05
+      }
+    },
+    "katana": {
+      "name": "Katana",
+      "baseDamage": 18,
+      "cooldown": 0.35,
+      "range": 60,
+      "arc": 70,
+      "knockback": 90,
+      "price": 200,
+      "upgradeScaling": {
+        "damage": 6,
+        "cooldown": -0.03
+      }
+    }
+  }
+}

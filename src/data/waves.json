@@ -1,0 +1,161 @@
+{
+  "waves": [
+    {
+      "wave": 1,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 6, "delay": 0 }
+      ]
+    },
+    {
+      "wave": 2,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 7, "delay": 0 },
+        { "enemy": "swarmBug", "count": 5, "delay": 3 }
+      ]
+    },
+    {
+      "wave": 3,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 6, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 3, "delay": 3 },
+        { "enemy": "swarmBug", "count": 6, "delay": 5 }
+      ]
+    },
+    {
+      "wave": 4,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 8, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 4, "delay": 2 },
+        { "enemy": "fastRunner", "count": 4, "delay": 4 },
+        { "enemy": "exploder", "count": 2, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 5,
+      "groups": [
+        { "enemy": "fastRunner", "count": 7, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 5, "delay": 2 },
+        { "enemy": "meleeGrunt", "count": 7, "delay": 4 },
+        { "enemy": "swarmBug", "count": 10, "delay": 5 },
+        { "enemy": "exploder", "count": 3, "delay": 7 }
+      ]
+    },
+    {
+      "wave": 6,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 10, "delay": 0 },
+        { "enemy": "shieldBrute", "count": 2, "delay": 2 },
+        { "enemy": "rangedShooter", "count": 7, "delay": 3 },
+        { "enemy": "fastRunner", "count": 6, "delay": 5 },
+        { "enemy": "swarmBug", "count": 8, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 7,
+      "groups": [
+        { "enemy": "fastRunner", "count": 10, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 8, "delay": 2 },
+        { "enemy": "meleeGrunt", "count": 10, "delay": 3 },
+        { "enemy": "sniper", "count": 2, "delay": 5 },
+        { "enemy": "exploder", "count": 4, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 8,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 12, "delay": 0 },
+        { "enemy": "shieldBrute", "count": 3, "delay": 1 },
+        { "enemy": "fastRunner", "count": 10, "delay": 2 },
+        { "enemy": "rangedShooter", "count": 10, "delay": 3 },
+        { "enemy": "sniper", "count": 3, "delay": 5 },
+        { "enemy": "swarmBug", "count": 12, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 9,
+      "groups": [
+        { "enemy": "fastRunner", "count": 14, "delay": 0 },
+        { "enemy": "exploder", "count": 6, "delay": 1 },
+        { "enemy": "rangedShooter", "count": 12, "delay": 2 },
+        { "enemy": "meleeGrunt", "count": 15, "delay": 3 },
+        { "enemy": "shieldBrute", "count": 4, "delay": 5 },
+        { "enemy": "sniper", "count": 3, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 10,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 20, "delay": 0 },
+        { "enemy": "shieldBrute", "count": 5, "delay": 1 },
+        { "enemy": "rangedShooter", "count": 14, "delay": 2 },
+        { "enemy": "fastRunner", "count": 16, "delay": 3 },
+        { "enemy": "exploder", "count": 6, "delay": 4 },
+        { "enemy": "sniper", "count": 4, "delay": 5 },
+        { "enemy": "swarmBug", "count": 15, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 11,
+      "groups": [
+        { "enemy": "fastRunner", "count": 16, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 16, "delay": 1 },
+        { "enemy": "meleeGrunt", "count": 20, "delay": 2 },
+        { "enemy": "shieldBrute", "count": 5, "delay": 3 },
+        { "enemy": "exploder", "count": 8, "delay": 4 },
+        { "enemy": "sniper", "count": 4, "delay": 5 },
+        { "enemy": "swarmBug", "count": 18, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 12,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 22, "delay": 0 },
+        { "enemy": "shieldBrute", "count": 6, "delay": 1 },
+        { "enemy": "fastRunner", "count": 18, "delay": 2 },
+        { "enemy": "rangedShooter", "count": 18, "delay": 3 },
+        { "enemy": "exploder", "count": 8, "delay": 4 },
+        { "enemy": "sniper", "count": 5, "delay": 5 },
+        { "enemy": "swarmBug", "count": 20, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 13,
+      "groups": [
+        { "enemy": "fastRunner", "count": 22, "delay": 0 },
+        { "enemy": "exploder", "count": 10, "delay": 1 },
+        { "enemy": "rangedShooter", "count": 20, "delay": 2 },
+        { "enemy": "meleeGrunt", "count": 25, "delay": 3 },
+        { "enemy": "shieldBrute", "count": 7, "delay": 4 },
+        { "enemy": "sniper", "count": 6, "delay": 5 },
+        { "enemy": "swarmBug", "count": 22, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 14,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 28, "delay": 0 },
+        { "enemy": "shieldBrute", "count": 8, "delay": 1 },
+        { "enemy": "fastRunner", "count": 24, "delay": 2 },
+        { "enemy": "rangedShooter", "count": 22, "delay": 3 },
+        { "enemy": "exploder", "count": 10, "delay": 4 },
+        { "enemy": "sniper", "count": 6, "delay": 5 },
+        { "enemy": "swarmBug", "count": 25, "delay": 6 }
+      ]
+    },
+    {
+      "wave": 15,
+      "boss": true,
+      "groups": [
+        { "enemy": "meleeGrunt", "count": 8, "delay": 0 },
+        { "enemy": "rangedShooter", "count": 5, "delay": 3 },
+        { "enemy": "shieldBrute", "count": 3, "delay": 5 },
+        { "enemy": "exploder", "count": 4, "delay": 7 },
+        { "enemy": "sniper", "count": 3, "delay": 8 }
+      ]
+    }
+  ],
+  "scalingPerWaveBeyond10": {
+    "enemyCountMultiplier": 1.15,
+    "enemyHpMultiplier": 1.1
+  }
+}
