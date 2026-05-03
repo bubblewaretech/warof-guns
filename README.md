@@ -20,15 +20,35 @@ Opens at `http://localhost:3000`. No build step needed for development.
 | `npm run lint` | ESLint check |
 | `npm run format` | Prettier format |
 
-## Controls
+## Building for Production (itch.io, etc.)
 
-| Key | Action |
-|-----|--------|
-| WASD / Arrow Keys | Move |
-| Mouse | Aim |
-| Left Mouse Button | Shoot (gun) |
-| Right Mouse Button / Space | Melee swing |
-| Esc | Pause / Resume |
+1. **Install dependencies** (if you haven't already):
+   ```bash
+   npm install
+   ```
+
+2. **Run the production build:**
+   ```bash
+   npm run build
+   ```
+   This type-checks the project with TypeScript and then bundles everything into the `dist/` folder using Vite.
+
+3. **Test the build locally** (optional):
+   ```bash
+   npm run preview
+   ```
+   Opens a local server serving the `dist/` folder so you can verify the build works before uploading.
+
+4. **Upload to itch.io:**
+   - Zip the entire contents of the `dist/` folder (not the folder itself — the files *inside* it).
+   - Go to your itch.io dashboard and create or edit your project.
+   - Set **Kind of project** to **HTML**.
+   - Upload the zip file and check **"This file will be played in the browser"**.
+   - Set the viewport dimensions to **1024 x 768** to match the game canvas.
+   - Save and view your game page.
+
+> **Note:** The Vite config uses `base: './'` so all asset paths are relative, which is required for itch.io's iframe hosting.
+
 
 ## Architecture Overview
 
